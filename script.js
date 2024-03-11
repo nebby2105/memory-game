@@ -20,6 +20,7 @@ class Card {
         card.classList.add('card');
         const frontSide = document.createElement('div');
         frontSide.classList.add('front');
+        frontSide.textContent = 'Spider';
         const backSide = document.createElement('div');
         backSide.classList.add('back');
         backSide.textContent = this.symbol;
@@ -30,15 +31,17 @@ class Card {
     }
 
     flip() {
-        if (!this.isFlipped) {
-            this.cardElement.classList.add('flipped');
-            this.isFlipped = true;
-            console.log('card is flipped');
-        } else {
-            this.cardElement.classList.remove('flipped');
-            this.isFlipped = false;
-            console.log('flipped back');
-        }
+        this.cardElement.classList.toggle('flipped');
+        this.isFlipped = !this.isFlipped;
+        // if (!this.isFlipped) {
+        //     this.cardElement.classList.add('flipped');
+        //     this.isFlipped = true;
+        //     console.log('card is flipped');
+        // } else {
+        //     this.cardElement.classList.remove('flipped');
+        //     this.isFlipped = false;
+        //     console.log('flipped back');
+        // }
     }
 }
 
