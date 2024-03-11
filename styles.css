@@ -31,6 +31,7 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s ease;
     position: relative; 
+    transform-style: preserve-3d; 
 }
 
 .card:hover {
@@ -48,11 +49,12 @@ h1 {
 }
 
 .front {
-    background-color: #ccc; /* Front side color */
+    background-color: #ccc;
+    transform: rotateY(180deg);
 }
 
 .back {
-    background-color: #f0f0f0; /* Different color for back side */
+    background-color: #f0f0f0; 
 }
 
 .flipped {
