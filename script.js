@@ -4,12 +4,15 @@ const grid = document.querySelector('.grid');
 let cardsChosen = [];
 let cardsChosenId = [];
 let cardsMatched = [];
+const modal = document.getElementById('modal');
+const playAgainBtn = document.getElementById('playAgainBtn');
+const noBtn = document.getElementById('noBtn'); 
 
 class Card {
     constructor(symbol, id) {
         this.symbol = symbol;
         this.id = id;
-        this.isFlipped = false;
+        this.isFlipped = true;
         this.cardElement = this.createCardElement();
         this.cardElement.addEventListener('click', () => this.flip());
     }
@@ -33,19 +36,72 @@ class Card {
     }
 
     flip() {
-        this.isFlipped = !this.isFlipped;
-        this.cardElement.classList.toggle('flipped');
+        if (cardsChosen.length < 2 && !this.isMatched) { 
+            this.isFlipped = !this.isFlipped;
+            this.cardElement.classList.toggle('flipped');
+            cardsChosen.push(this.cardElement);
+            if (cardsChosen.length === 2) {
+                checkForMatch();
+            }
+        }
     }
 }
 
 function generateCards() {
-    for (let symbol of doubledSymbols) {
+    const shuffledSymbols = doubledSymbols.slice().sort(() => Math.random() - 0.5);
+    for (let symbol of shuffledSymbols) {
         const card = new Card(symbol);
         grid.appendChild(card.cardElement);
     }
 }
 
 generateCards();
+
+function checkForMatch() {
+    const [card1, card2] = cardsChosen;
+    const symbol1 = card1.querySelector('.back').textContent;
+    const symbol2 = card2.querySelector('.back').textContent;
+
+    if (symbol1 === symbol2) {
+        cardsMatched.push(card1, card2);
+        cardsChosen = [];
+        card1.isMatched = true;
+        card2.isMatched = true;
+
+        if (cardsMatched.length === doubledSymbols.length) {
+            showModal();
+        }
+    } else {
+        setTimeout(() => {
+            card1.classList.remove('flipped');
+            card2.classList .remove('flipped');
+            cardsChosen = [];
+
+        }, 1000);
+    }
+}
+
+function showModal() {
+    modal.style.display = "block";
+
+    playAgainBtn.addEventListener('click', function() {
+        resetGame();
+        modal.style.display = "none";
+    });
+
+    noBtn.addEventListener('click', function() {
+        modal.style.display = "none";
+    });
+  };
+
+  function resetGame() {
+    grid.innerHTML = '';
+    cardsChosen = [];
+    cardsChosenId = [];
+    cardsMatched = [];
+
+    generateCards();
+}
 
 
 
