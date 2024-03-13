@@ -1,6 +1,8 @@
-const symbols = ['🍉', '🍎', '🍋', '🍇', '🍒', '🍓', '🥥', '🍍'];
-const doubledSymbols = [...symbols, ...symbols];
+// const symbols = ['🍉', '🍎', '🍋', '🍇', '🍒', '🍓', '🥥', '🍍'];
+const images = ['img/spider1.jpg', 'img/spider2.jpg', 'img/spider3.jpg', 'img/spider4.jpg', 'img/spider5.jpg', 'img/spider6.jpg', 'img/spider7.jpg', 'img/spider8.jpg'];
+const doubledImages = [...images, ...images];
 const grid = document.querySelector('.grid');
+const startButton = document.getElementById('startButton');
 let cardsChosen = [];
 let cardsChosenId = [];
 let cardsMatched = [];
@@ -8,9 +10,15 @@ const modal = document.getElementById('modal');
 const playAgainBtn = document.getElementById('playAgainBtn');
 const noBtn = document.getElementById('noBtn'); 
 
+startButton.addEventListener('click', () => {
+    startButton.style.display = 'none';
+    grid.classList.remove('hidden');
+    generateCards(); 
+});
+
 class Card {
-    constructor(symbol, id) {
-        this.symbol = symbol;
+    constructor(imageUrl, id) {
+        this.imageUrl = imageUrl;
         this.id = id;
         this.isFlipped = true;
         this.cardElement = this.createCardElement();
@@ -27,7 +35,9 @@ class Card {
 
         const back = document.createElement('div');
         back.classList.add('back');
-        back.textContent = this.symbol;
+        const backImg = document.createElement('img');
+        backImg.src = this.imageUrl;
+        back.appendChild(backImg);
 
         card.appendChild(front);
         card.appendChild(back);
@@ -48,28 +58,27 @@ class Card {
 }
 
 function generateCards() {
-    const shuffledSymbols = doubledSymbols.slice().sort(() => Math.random() - 0.5);
-    for (let symbol of shuffledSymbols) {
-        const card = new Card(symbol);
+    const shuffledImages = doubledImages.slice().sort(() => Math.random() - 0.5);
+    for (let image of shuffledImages) {
+        const card = new Card(image);
         grid.appendChild(card.cardElement);
     }
 }
 
-generateCards();
 
 function checkForMatch() {
     const [card1, card2] = cardsChosen;
-    const symbol1 = card1.querySelector('.back').textContent;
-    const symbol2 = card2.querySelector('.back').textContent;
+    const imageUrl1 = card1.querySelector('.back img').src;
+    const imageUrl2 = card2.querySelector('.back img').src; 
 
-    if (symbol1 === symbol2) {
+    if (imageUrl1 === imageUrl2) {
         cardsMatched.push(card1, card2);
         cardsChosen = [];
         card1.isMatched = true;
         card2.isMatched = true;
 
-        if (cardsMatched.length === doubledSymbols.length) {
-            showModal();
+        if (cardsMatched.length === doubledImages.length) {
+            setTimeout(showModal, 500);
         }
     } else {
         setTimeout(() => {
