@@ -1,11 +1,23 @@
+:root {
+    --background: #f0f0f0;
+    --header-color: #333;
+    --card-front: #ccc;
+    --modal-background:  rgba(0,0,0,0.4);
+    --modal-border: #888;
+    --btn-color: #4CAF50;
+    --btn-hover: #45a049;
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: var(--background);
     margin: 0;
     padding: 0;
 }
 
 .container {
+    position: relative;
+    height: 90vh;
     max-width: 600px;
     margin: 20px auto;
     text-align: center;
@@ -16,7 +28,7 @@ body {
 }
 
 h1 {
-    color: #333;
+    color: var(--header-color);
     margin-bottom: 40px;
 }
 
@@ -38,10 +50,9 @@ img {
 
 .card {
     width: 130px; 
-    height: 130px; 
-    background-color: #fff; 
+    height: 130px;  
     border-radius: 15px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px var(--modal-background);
     cursor: pointer;
     transition: transform 0.2s ease;
     position: relative; 
@@ -64,11 +75,10 @@ img {
 }
 
 .front {
-    background-color: #ccc;
+    background-color: var(--card-front);
 }
 
-.back {
-    background-color: #f0f0f0; 
+.back { 
     transform: rotateY(180deg);
 }
 
@@ -88,15 +98,14 @@ img {
     width: 100%; 
     height: 100%; 
     overflow: auto; 
-    background-color: rgb(0,0,0); 
-    background-color: rgba(0,0,0,0.4); 
+    background-color: var(--modal-background); 
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--background);
     margin: 15% auto; 
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid var(--modal-border);
     width: 30%;
     height: 40%;
     border-radius: 10px;
@@ -118,10 +127,29 @@ img {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #4CAF50;
+    background-color: var(--btn-color);
     color: white;
 }
 
 .modal-buttons button:hover {
-    background-color: #45a049; 
+    background-color: var(--btn-hover); 
 }
+
+#startButton {
+    background-color: var(--btn-color); 
+    border: none; 
+    color: white; 
+    padding: 15px 32px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    margin-top: 20px; 
+    cursor: pointer; 
+    border-radius: 8px; 
+    transition: background-color 0.3s;
+}
+
+#startButton:hover {
+    background-color: var(--btn-hover); 
+  }
